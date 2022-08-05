@@ -10,7 +10,6 @@ import {
 import Field from "~/components/Field";
 import ArrowRight from "~/icons/ArrowRight";
 import Check from "~/icons/Check";
-import Sparkles from "~/icons/Sparkles";
 
 import Button from "../components/Button";
 import Logo from "../icons/Logo";
@@ -84,18 +83,10 @@ export default function Login() {
       <aside className="flex flex-col items-stretch justify-start gap-8">
         <h1 className="font-black text-4xl md:text-6xl">
           <span className="hidden">DairyValley —</span>
-          <span>
-            <span className="text-green-900">Grocery</span> shopping,{" "}
-            <span className="text-blue-900">right from your home</span>.
+          <span className="text-center">
+            Get Every dairy product right from your home.
           </span>
         </h1>
-
-        <div className="self-center flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1 bg-violet-100 text-violet-900">
-          <Sparkles size={14} />
-          <p className="text-xs">
-            Now available in <span className="font-bold">Bhilwara</span>!
-          </p>
-        </div>
       </aside>
       <main>
         <Form

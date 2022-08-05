@@ -9,6 +9,7 @@ import Toggles from "~/components/Toggles";
 import Items from "~/components/Items";
 // import { getBanner } from "utils/banner.server";
 import { json } from "@remix-run/node";
+import Sparkles from "~/icons/Sparkles";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
@@ -81,7 +82,7 @@ export default function Index() {
         />
       </Form>
 
-      <p className="text-sm">
+      {/* <p className="text-sm">
         <span className="font-bold">{loaderData?.products?.length}</span>{" "}
         <span>products found</span> <span>in category</span>{" "}
         <span className="font-bold">
@@ -97,7 +98,22 @@ export default function Index() {
           </>
         ) : null}
         {"."}
-      </p>
+      </p> */}
+
+      <div className="bg-neutral-100 rounded-xl overflow-hidden flex flex-col items-stretch justify-start">
+        <img src="cow.jpg" alt="cow" className="rounded-xl" />
+        <div className="flex flex-col items-stretch justify-start gap-2 p-5">
+          <p className="font-bold text-lg">Ram Lal Dairy</p>
+          <span className="flex gap-2 items-center">
+            <Sparkles fill="green" />
+            <p>
+              <span className="font-medium">3.8</span> (100)
+            </p>
+          </span>
+        </div>
+      </div>
+
+      <p className="font-bold">Products</p>
 
       <Items>
         {loaderData?.products?.map(function (product) {
