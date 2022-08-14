@@ -100,7 +100,6 @@ export default function Index() {
       <Button
         theme="blue"
         type="submit"
-        className="umami--click--change-details"
         disabled={
           user?.name == name &&
           user?.addressLine1 == address1 &&
@@ -110,12 +109,7 @@ export default function Index() {
         <Pencil />
         <span>Save new details</span>
       </Button>
-      <Button
-        as={Link}
-        theme="red"
-        to="/logout"
-        className="umami--click--user-logout"
-      >
+      <Button as={Link} theme="red" to="/logout">
         Logout
       </Button>
     </Form>

@@ -4,6 +4,7 @@ const THEMES = {
   green: "bg-green-100 text-green-900",
   blue: "bg-blue-100 text-blue-900",
   pink: "bg-pink-100 text-pink-900",
+  yellow: "bg-yellow-100 text-yellow-900",
 };
 
 export default function Card({

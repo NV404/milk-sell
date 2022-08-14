@@ -1,5 +1,6 @@
-import { Form, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
+import { getSellers } from "utils/seller.server";
 import { getProducts } from "utils/product.server";
 import Field from "~/components/Field";
 import Button from "~/components/Button";
@@ -21,6 +22,7 @@ export async function loader({ request }) {
     category = null;
   }
 
+  let sellers = [];
   let products = [];
 
   if (query) {
@@ -33,11 +35,12 @@ export async function loader({ request }) {
     // const tokensStringWithOR = tokens.join(" | ");
     // products = await searchProducts(tokensStringWithOR, category);
   } else {
-    products = await getProducts(category);
+    sellers = await getSellers();
+    products = await getProducts();
   }
 
   return json(
-    { products, query, category: category || "all" },
+    { sellers, products, query, category: category || "all" },
     {
       status: 200,
       headers: {
@@ -52,14 +55,14 @@ export default function Index() {
 
   return (
     <div className="flex flex-col items-stretch justify-start gap-6">
-      <Form
-        replace
-        method="GET"
+      <div
+        // replace
+        // method="GET"
         className="flex flex-col items-stretch justify-start gap-2"
       >
         <div className="flex justify-between gap-2">
           <Field
-            placeholder="Eg. Parle-G"
+            placeholder="Eg. Milk"
             type="text"
             name="search"
             autoComplete="off"
@@ -80,7 +83,7 @@ export default function Index() {
           })}
           defaultValue={loaderData?.category}
         />
-      </Form>
+      </div>
 
       {/* <p className="text-sm">
         <span className="font-bold">{loaderData?.products?.length}</span>{" "}
@@ -100,20 +103,38 @@ export default function Index() {
         {"."}
       </p> */}
 
-      <div className="bg-neutral-100 rounded-xl overflow-hidden flex flex-col items-stretch justify-start">
-        <img src="cow.jpg" alt="cow" className="rounded-xl" />
-        <div className="flex flex-col items-stretch justify-start gap-2 p-5">
-          <p className="font-bold text-lg">Ram Lal Dairy</p>
-          <span className="flex gap-2 items-center">
-            <Sparkles fill="green" />
-            <p>
-              <span className="font-medium">3.8</span> (100)
-            </p>
-          </span>
-        </div>
-      </div>
+      <p className="font-bold">
+        diary's near you{" "}
+        <span className="font-medium text-sm">
+          (a new page is needed to be created for card before 16)
+        </span>
+      </p>
 
-      <p className="font-bold">Products</p>
+      <Items>
+        {loaderData?.sellers?.map(function (seller) {
+          return (
+            <div className="bg-neutral-100 rounded-xl overflow-hidden flex flex-col items-stretch justify-start">
+              <img src="cow.jpg" alt="cow" className="rounded-xl" />
+              <div className="flex flex-col items-stretch justify-start gap-2 p-5">
+                <p className="font-bold text-lg">{seller.shopName}</p>
+                <span className="flex gap-2 items-center">
+                  <Sparkles fill="green" />
+                  <p>
+                    <span className="font-medium">3.8</span> (100)
+                  </p>
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </Items>
+
+      <p className="font-bold">
+        products{" "}
+        <span className="font-medium text-sm">
+          (this section will be removed before 16)
+        </span>
+      </p>
 
       <Items>
         {loaderData?.products?.map(function (product) {

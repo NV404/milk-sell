@@ -149,11 +149,7 @@ export default function ConfirmOrder() {
         className="flex flex-col items-stretch justify-start gap-2"
       >
         <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-        <Button
-          type="submit"
-          theme="green"
-          className="umami--click--confirm-order"
-        >
+        <Button type="submit" theme="green">
           <Check />
           <p>Confirm order</p>
         </Button>

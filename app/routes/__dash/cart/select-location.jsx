@@ -19,16 +19,16 @@ export async function loader({ request }) {
 export async function action({ request }) {
   const formData = await request.formData();
 
-  const addressLink = formData.get("addressLink");
+  const lat = formData.get("lat");
+  const lng = formData.get("lng");
 
   const user = await getUser(request);
 
-  if (user && addressLink) {
-    if (user?.addressLink !== addressLink) {
+  if (user && lat && lng) {
+    if (user?.lat !== lat || user?.lng !== lng) {
       const data = {
-        ...(user?.addressLink !== addressLink
-          ? { addressLink: addressLink }
-          : {}),
+        ...(user?.lat !== lat ? { lat } : {}),
+        ...(user?.lng !== lng ? { lng } : {}),
       };
       await updateUser({ request, data });
     }
@@ -113,8 +113,15 @@ export default function SelectLocation() {
           <>
             <input
               type="text"
-              name="addressLink"
-              value={`http://www.google.com/maps/place/${location.lat},${location.lng}`}
+              name="lat"
+              value={location.lat}
+              readOnly
+              hidden
+            />
+            <input
+              type="text"
+              name="lng"
+              value={location.lng}
               readOnly
               hidden
             />
@@ -136,11 +143,7 @@ export default function SelectLocation() {
         )}
       </div>
 
-      <Button
-        type="submit"
-        theme="green"
-        className="umami--click--select-location"
-      >
+      <Button type="submit" theme="green">
         <LocationMarker />
         <span>Confirm location</span>
       </Button>

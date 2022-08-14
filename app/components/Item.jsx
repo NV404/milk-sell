@@ -44,12 +44,10 @@ export default function Item({ data }) {
       <p className="">
         <span className="font-bold text-green-900">₹{data?.price}</span>
         {" per "}
-        <span className="font-medium">{data?.packageType}</span>{" "}
-        {data?.weight ? (
-          <span className="">
-            ({data?.weight} {data?.weightUnit})
-          </span>
-        ) : null}
+        <span className="font-medium">
+          {data?.weight} {data?.weightUnit}
+        </span>{" "}
+        ({data?.packageType})
       </p>
 
       {data?.description ? (
@@ -75,7 +73,7 @@ export default function Item({ data }) {
             theme="red"
             size="small"
             round={false}
-            className={`rounded-l umami--click--remove-${data.id}`}
+            className="rounded-l"
             onClick={() => {
               decrementQuantity(data.id);
             }}
@@ -91,7 +89,7 @@ export default function Item({ data }) {
             theme="green"
             size="small"
             round={false}
-            className={`rounded-r umami--click--add-${data.id}`}
+            className="rounded-r"
             onClick={function () {
               currentQuantity < 1 ? add(data) : incrementQuantity(data.id);
             }}

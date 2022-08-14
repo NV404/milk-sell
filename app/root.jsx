@@ -99,12 +99,6 @@ export default function App() {
             <Outlet />
           </CartProvider>
         </div>
-        <script
-          async
-          defer
-          data-website-id="8649f55e-4ecb-4131-b426-f4bb221c5561"
-          src="https://umami-production-ae38.up.railway.app/umami.js"
-        ></script>
         <ScrollRestoration /> <Scripts /> <LiveReload />
       </body>
     </html>

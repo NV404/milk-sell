@@ -132,13 +132,7 @@ function Generate() {
         required
       />
 
-      <Button
-        type="submit"
-        theme="green"
-        name="action"
-        value="generate"
-        className="umami--click--generate-otp"
-      >
+      <Button type="submit" theme="green" name="action" value="generate">
         <span>Continue</span>
         <ArrowRight />
       </Button>
@@ -164,13 +158,7 @@ function Verify({ session, number }) {
       <input type="hidden" name="session" value={session} />
       <input type="hidden" name="number" value={number} />
 
-      <Button
-        type="submit"
-        theme="green"
-        name="action"
-        value="verify"
-        className="umami--click--verify-otp"
-      >
+      <Button type="submit" theme="green" name="action" value="verify">
         <Check />
         <span>Verify OTP</span>
       </Button>

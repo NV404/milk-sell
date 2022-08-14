@@ -5,27 +5,6 @@ import Check from "~/icons/Check";
 import Card from "./Card";
 import Items from "./Items";
 
-function X({ d }) {
-  var countDownDate = new Date(d).getTime();
-  const [y, setY] = useState(null);
-  const [yo, setYo] = useState(null);
-  setInterval(function () {
-    var now = new Date().getTime();
-    var timeleft = countDownDate - now;
-
-    setYo(
-      Math.abs(-30 - Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60)))
-    );
-    setY(Math.abs(-60 - Math.floor((timeleft % (1000 * 60)) / 1000)));
-  }, 1000);
-
-  return (
-    <>
-      {yo} min, {y} sec
-    </>
-  );
-}
-
 export default function Order({ data, id }) {
   return (
     <article className="bg-neutral-100 rounded-xl p-4 flex flex-col items-stretch justify-start gap-4">
@@ -36,6 +15,18 @@ export default function Order({ data, id }) {
         </p>
       </div>
 
+      {data.status === "pending" ? (
+        <Card theme="yellow">
+          <Bolt />
+          <p className="text-sm">
+            <span className="font-bold">
+              Waiting for confirmation from farmer
+            </span>
+            <br />
+          </p>
+        </Card>
+      ) : null}
+
       {data.status === "in progress" ? (
         <Card theme="green">
           <Bolt />
@@ -45,9 +36,6 @@ export default function Order({ data, id }) {
             <span className="">
               <span className="font-medium">Estimated delivery in</span>
               <br />
-              <span className="font-bold">
-                <X d={data.createdAt} />
-              </span>
               <span className="font-medium">.</span>
             </span>
           </p>

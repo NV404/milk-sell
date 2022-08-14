@@ -82,11 +82,7 @@ export default function SelectAddress() {
         />
 
         <div className="flex-1"></div>
-        <Button
-          theme="green"
-          type="submit"
-          className="umami--click--select-address"
-        >
+        <Button theme="green" type="submit">
           <LocationMarker />
           <span>Confirm details</span>
         </Button>
