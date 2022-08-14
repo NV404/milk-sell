@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { useState } from "react";
 import Bolt from "~/icons/Bolt";
 import Check from "~/icons/Check";
 import Card from "./Card";
