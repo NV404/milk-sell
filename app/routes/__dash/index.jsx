@@ -103,6 +103,20 @@ export default function Index() {
         {"."}
       </p> */}
 
+<p>Categories</p>
+      <div className="w-full flex flex-col gap-4">
+      <div className="w-full flex justify-evenly items-center">
+      <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+      <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+      <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+      </div>
+      <div className="w-full flex justify-evenly items-center">
+      <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+      <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+      <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+      </div>
+      </div>
+
       <p className="font-bold">
         diary's near you{" "}
         <span className="font-medium text-sm">
