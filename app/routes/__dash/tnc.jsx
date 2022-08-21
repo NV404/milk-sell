@@ -1,9 +1,11 @@
-import React from 'react'
-import {Form, useTransition, Link} from '@remix-run/react'
+
+import {Link} from '@remix-run/react'
 import Button from '~/components/Button'
 function tnc() {
   return (
     <><h1 className=''> Terms and Condition</h1>
+     {/* TODO add terms and condition */}
+           
         <ol>
             <li>
                 Our application is only for users who have ability to and willing to test the products.
@@ -21,13 +23,17 @@ function tnc() {
             Accept
             </Button>
             
-            </Link>
-            
-            <Link to ='/'>
-            <Button>
+        </Link>
+            {/* Button looks ugly, 
+            TODO 
+            Add appropriate space between button
+            How to throw error if user does not accept the terms and condition? */}
+       
+        <Link to ='/'>
+            <Button theme='red'>
                 Reject
-                </Button>
-                </Link>
+            </Button>
+        </Link>
     </>
   )
 }

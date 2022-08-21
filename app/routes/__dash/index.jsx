@@ -11,6 +11,8 @@ import Items from "~/components/Items";
 // import { getBanner } from "utils/banner.server";
 import { json } from "@remix-run/node";
 import Sparkles from "~/icons/Sparkles";
+import Categories from "~/components/Categories";
+import LangShow from "~/components/LangCh";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
@@ -61,6 +63,13 @@ export default function Index() {
         className="flex flex-col items-stretch justify-start gap-2"
       >
         <div className="flex justify-between gap-2">
+         
+         
+         
+         
+         <LangShow/>
+        
+        
           <Field
             placeholder="Eg. Milk"
             type="text"
@@ -72,6 +81,7 @@ export default function Index() {
             <Search />
           </Button>
         </div>
+
         <Toggles
           triggerType="submit"
           name="category"
@@ -84,8 +94,8 @@ export default function Index() {
           defaultValue={loaderData?.category}
         />
       </div>
-
-      {/* <p className="text-sm">
+      {/*
+      <p className="text-sm">
         <span className="font-bold">{loaderData?.products?.length}</span>{" "}
         <span>products found</span> <span>in category</span>{" "}
         <span className="font-bold">
@@ -101,8 +111,10 @@ export default function Index() {
           </>
         ) : null}
         {"."}
-      </p> */}
+      </p>                                                                                                                                                                                                       
+        */}
 
+      
       <p className="font-bold">
         diary's near you{" "}
         <span className="font-medium text-sm">
@@ -113,7 +125,8 @@ export default function Index() {
       <Items>
         {loaderData?.sellers?.map(function (seller) {
           return (
-            <div className="bg-neutral-100 rounded-xl overflow-hidden flex flex-col items-stretch justify-start">
+            
+            <div key   className="bg-neutral-100 rounded-xl overflow-hidden flex flex-col items-stretch justify-start">
               <img src="cow.jpg" alt="cow" className="rounded-xl" />
               <div className="flex flex-col items-stretch justify-start gap-2 p-5">
                 <p className="font-bold text-lg">{seller.shopName}</p>
