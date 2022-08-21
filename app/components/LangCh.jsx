@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form,} from '@remix-run/react'
 
-
+// Whether user is logged in needs to be taken from api
 function LangShow(){
     let isLoggedIn = false;
     return(

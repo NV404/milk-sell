@@ -62,14 +62,20 @@ export default function Index() {
         // method="GET"
         className="flex flex-col items-stretch justify-start gap-2"
       >
+        <LangShow/>
         <div className="flex justify-between gap-2">
-         
-         
-         
-         
-         <LangShow/>
-        
-        
+          <Field
+            placeholder="Eg. Vijaywada"
+            type="text"
+            name="search"
+            autoComplete="off"
+            defaultValue={loaderData?.query}
+          />
+          <Button type="submit" theme="blue">
+            <Search />
+          </Button>
+        </div>
+        <div className="flex justify-between gap-2">
           <Field
             placeholder="Eg. Milk"
             type="text"
