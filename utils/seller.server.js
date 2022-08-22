@@ -7,6 +7,7 @@ export async function getSellers() {
     },
     select: {
         shopName: true,
+        id: true,
     }
   });
 

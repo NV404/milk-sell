@@ -11,3 +11,15 @@ export async function updateUser({ request, data }) {
     return user;
   }
 }
+
+export async function getUserById(id) {
+  const user = await db.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  delete user.passwordHash;
+
+  return user;
+}

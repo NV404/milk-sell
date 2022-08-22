@@ -26,12 +26,12 @@ export default function Item({ data }) {
   );
 
   return (
-    <article className="bg-neutral-100 rounded-xl p-4 flex flex-col items-stretch justify-start gap-2">
+    <article className="bg-white rounded-xl p-4 flex flex-col items-stretch justify-start gap-2">
       <img
         src={data.imageURL}
         alt={`${data.name}`}
         loading="lazy"
-        className="w-full h-[25vh] object-scale-down rounded-xl bg-white"
+        className="w-full h-[25vh] object-scale-down rounded-xl bg-purple-150"
       />
 
       <div className="flex flex-col items-stretch justify-start">

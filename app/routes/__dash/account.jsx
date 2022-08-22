@@ -98,7 +98,6 @@ export default function Index() {
       />
       <div className="flex-1"></div>
       <Button
-        theme="blue"
         type="submit"
         disabled={
           user?.name == name &&

@@ -1,11 +1,12 @@
 import { emptyCart, getCart } from "./cart.server";
 import { db } from "./db.server";
 import { getUserId } from "./session.server";
+import { getUserById } from "./user.server";
 
 export async function createOrder(request) {
   const userID = await getUserId(request);
+  const user = await getUserById(userID);
   const cart = await getCart(request);
-  const deliveryCharge = await calculateDeliveryCharge(request);
   let price = 0;
 
   cart.map((item) => {
@@ -13,14 +14,15 @@ export async function createOrder(request) {
     return null;
   });
 
-  const discount = price >= 100 ? Math.round((price / 100) * 5) : 0;
-
   const order = await db.order.create({
     data: {
-      price: price - discount,
+      price: price,
       userID: userID,
       sellerId: cart[0].product.sellerId,
-      deliveryCharge: deliveryCharge,
+      addressLine1: user.addressLine1,
+      addressLine2: user.addressLine2,
+      lat: user.lat,
+      lng: user.lng,
       carts: { connect: cart.map((item) => ({ id: item.id })) },
     },
     include: {
@@ -51,18 +53,4 @@ export async function getOrders(request) {
   if (order) {
     return order;
   }
-}
-
-export async function calculateDeliveryCharge(request) {
-  const userID = await getUserId(request);
-  const order = await db.order.count({
-    where: {
-      userID: userID,
-    },
-  });
-  if (order > 0) {
-    return 20;
-  }
-
-  return order;
 }

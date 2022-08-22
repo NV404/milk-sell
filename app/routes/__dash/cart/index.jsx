@@ -28,7 +28,7 @@ export default function Index() {
         })}
       </Items>
 
-      <Button as={Link} to="select-address" theme="green">
+      <Button as={Link} to="select-address">
         <span>Continue</span>
         <ArrowRight />
       </Button>

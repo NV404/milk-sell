@@ -6,7 +6,7 @@ import Items from "./Items";
 
 export default function Order({ data, id }) {
   return (
-    <article className="bg-neutral-100 rounded-xl p-4 flex flex-col items-stretch justify-start gap-4">
+    <article className="bg-white rounded-xl p-4 flex flex-col items-stretch justify-start gap-4">
       <div className="flex flex-col items-stretch justify-start">
         <p className="text-lg font-bold">#{id + 1}</p>
         <p className="text-xs">
@@ -16,39 +16,22 @@ export default function Order({ data, id }) {
 
       {data.status === "pending" ? (
         <Card theme="yellow">
-          <Bolt />
-          <p className="text-sm">
-            <span className="font-bold">
-              Waiting for confirmation from farmer
-            </span>
-            <br />
+          <p className="text-sm font-bold text-center w-full">
+            Waiting for confirmation from farmer
           </p>
         </Card>
       ) : null}
 
-      {data.status === "in progress" ? (
+      {data.status === "accepted" ? (
         <Card theme="green">
           <Bolt />
-          <p className="text-sm">
-            <span className="font-bold">Order on the way,</span>
-            <br />
-            <span className="">
-              <span className="font-medium">Estimated delivery in</span>
-              <br />
-              <span className="font-medium">.</span>
-            </span>
-          </p>
+          <p className="text-sm font-bold">Your order is accepted</p>
         </Card>
       ) : null}
 
-      {data.status === "success" ? (
-        <Card theme="blue">
-          <Check />
-          <p className="text-sm">
-            <span className="font-medium">Order was</span>{" "}
-            <span className="font-bold">delivered</span>
-            <span className="font-medium">.</span>
-          </p>
+      {data.status === "rejected" ? (
+        <Card theme="red">
+          <p className="text-sm font-bold">Your order is rejected</p>
         </Card>
       ) : null}
 
@@ -81,7 +64,7 @@ export default function Order({ data, id }) {
 
       <p className="md:text-center border-t border-neutral-400 border-dashed pt-2">
         <span className="text-green-900 font-bold">
-          ₹{parseFloat(data.price) + parseFloat(data.deliveryCharge)}
+          ₹{parseFloat(data.price)}
         </span>{" "}
         <span className="text-sm font-medium">total</span>
       </p>

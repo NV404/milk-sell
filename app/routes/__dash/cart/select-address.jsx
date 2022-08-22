@@ -82,7 +82,7 @@ export default function SelectAddress() {
         />
 
         <div className="flex-1"></div>
-        <Button theme="green" type="submit">
+        <Button type="submit">
           <LocationMarker />
           <span>Confirm details</span>
         </Button>

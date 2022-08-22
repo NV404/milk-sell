@@ -93,7 +93,7 @@ export default function App() {
       <head>
         <Meta /> <Links />
       </head>
-      <body className="h-full">
+      <body className="h-full bg-purple-150">
         <div className="w-[min(640px,_100%)] h-full mx-auto p-4">
           <CartProvider>
             <Outlet />

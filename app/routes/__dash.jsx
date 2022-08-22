@@ -17,21 +17,13 @@ function NavL({ children, to, icon: Icon }) {
     <NavLink
       to={to}
       className={function ({ isActive }) {
-        return `flex-1 flex flex-row items-center justify-center gap-2 py-2 px-3 rounded-xl font-bold ${
-          isActive ? "bg-black text-white" : "bg-neutral-200 text-black"
+        return `flex-1 flex flex-col items-center justify-center py-2 px-3 rounded-xl font-bold ${
+          isActive ? "text-black bg-purple-200" : "text-slate-700"
         }`;
       }}
     >
-      {function ({ isActive }) {
-        return isActive ? (
-          <Icon />
-        ) : (
-          <>
-            <Icon />
-            <span>{children}</span>
-          </>
-        );
-      }}
+      <Icon size={25} />
+      <span className="text-xs font-normal">{children}</span>
     </NavLink>
   );
 }
@@ -109,10 +101,10 @@ export default function __Dash() {
           </div>
         </nav>
 
-        <main className="flex-1 flex flex-col items-stretch justify-start pb-[56px]">
+        <main className="flex-1 flex flex-col items-stretch justify-start pb-24">
           <Outlet />
         </main>
-        <nav className="max-w-[640px] h-[56px] mx-auto fixed bottom-0 left-0 right-0 flex items-stretch justify-start gap-2 z-10 rounded-t-xl bg-neutral-50/80 backdrop-blur px-4 py-2">
+        <nav className="max-w-[640px] mx-auto fixed bottom-0 left-0 right-0 flex items-stretch justify-start gap-2 z-10 rounded-t-xl bg-neutral-50/80 backdrop-blur px-4 py-2">
           <NavL to="/" icon={Home}>
             Home
           </NavL>

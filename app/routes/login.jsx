@@ -28,6 +28,7 @@ export async function action({ request }) {
   const number = formData.get("number");
   const action = formData.get("action");
   const session = formData.get("session");
+  const vendor = formData.get("vendor");
   const otp = formData.get("otp");
 
   if (number && action) {
@@ -55,6 +56,9 @@ export async function action({ request }) {
     if (action === "verify") {
       const data = await verifyOTP(session, otp, number);
       if (data?.data) {
+        if (vendor === "true") {
+          return createUserSession(data?.data.id, "/vendor/onboard");
+        }
         return createUserSession(data?.data.id, "/");
       }
       return {
@@ -132,7 +136,7 @@ function Generate() {
         required
       />
 
-      <Button type="submit" theme="green" name="action" value="generate">
+      <Button type="submit" name="action" value="generate">
         <span>Continue</span>
         <ArrowRight />
       </Button>
@@ -158,7 +162,12 @@ function Verify({ session, number }) {
       <input type="hidden" name="session" value={session} />
       <input type="hidden" name="number" value={number} />
 
-      <Button type="submit" theme="green" name="action" value="verify">
+      <div className="flex gap-2">
+        <input type="checkbox" name="vendor" value={true} />
+        <p>I am a vendor with GST number</p>
+      </div>
+
+      <Button type="submit" name="action" value="verify">
         <Check />
         <span>Verify OTP</span>
       </Button>

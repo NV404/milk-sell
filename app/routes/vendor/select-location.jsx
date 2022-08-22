@@ -5,40 +5,38 @@ import MapPicker from "react-google-map-picker";
 import { getUser, getUserId } from "utils/session.server";
 import { updateUser } from "utils/user.server";
 import Button from "~/components/Button";
-import LocationMarker from "~/icons/LocationMarker";
 
 export async function loader({ request }) {
   const userID = await getUserId(request);
   if (!userID) {
     return redirect("/login");
   }
-
   return {};
 }
 
 export async function action({ request }) {
   const formData = await request.formData();
 
-  const lat = formData.get("lat");
-  const lng = formData.get("lng");
+  const vendorLat = formData.get("lat");
+  const vendorLng = formData.get("lng");
 
   const user = await getUser(request);
 
-  if (user && lat && lng) {
-    if (user?.lat !== lat || user?.lng !== lng) {
+  if (user && vendorLat && vendorLng) {
+    if (user?.vendorLat !== vendorLat || user?.vendorLng !== vendorLng) {
       const data = {
-        ...(user?.lat !== lat ? { lat } : {}),
-        ...(user?.lng !== lng ? { lng } : {}),
+        ...(user?.vendorLat !== vendorLat ? { vendorLat } : {}),
+        ...(user?.vendorLng !== vendorLng ? { vendorLng } : {}),
       };
       await updateUser({ request, data });
     }
-    return redirect("cart/confirm-order");
+    return redirect("/");
   }
 
   return { error: "values missing" };
 }
 
-export default function SelectLocation() {
+export default function SelectVendorLocation() {
   const [status, setStatus] = useState(null);
 
   const [show, setShow] = useState(false);
@@ -106,7 +104,7 @@ export default function SelectLocation() {
   return (
     <Form
       method="post"
-      className="h-full flex flex-col items-stretch justify-between gap-2"
+      className="h-screen flex flex-col items-stretch justify-between gap-4 py-10 px-5"
     >
       <div className="h-full bg-white rounded-xl ">
         {show && location ? (
@@ -144,7 +142,6 @@ export default function SelectLocation() {
       </div>
 
       <Button type="submit">
-        <LocationMarker />
         <span>Confirm location</span>
       </Button>
     </Form>

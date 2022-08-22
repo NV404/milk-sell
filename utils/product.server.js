@@ -6,33 +6,44 @@ export async function getProducts() {
   return products;
 }
 
-// export async function getProductsByCategory(slug) {
-//   const products = await db.product.findMany({
-//     where: {
-//       category: {
-//         slug: slug,
-//       },
-//     },
-//     include: {
-//       category: true,
-//     },
-//   });
-//   return products;
-// }
+export async function getShopProducts(sellerId) {
+  const products = await db.product.findMany({
+    where: {
+      sellerId
+    },
+    include: {
+      seller: true
+    }
+  });
 
-// export async function searchProducts(query) {
-//   const products = await db.product.findMany({
-//     where: {
-//       ...(category ? { categoryID: category } : {}),
-//       OR: [
-//         { name: { search: query } },
-//         { description: { search: query } },
-//         { keywords: { search: query } },
-//       ],
-//     },
-//     include: {
-//       category: true,
-//     },
-//   });
-//   return products;
-// }
+  return products;
+}
+
+
+export async function getProductsByCategory(slug) {
+  const products = await db.product.findMany({
+    where: {
+      category: {
+        slug: slug,
+      },
+    },
+    include: {
+      seller: true,
+      category: true
+    },
+  });
+  return products;
+}
+
+export async function searchProducts(query) {
+  const products = await db.product.findMany({
+    where: {
+      name: { contains: query },
+      description: { contains: query },
+    },
+    include: {
+      seller: true
+    },
+  });
+  return products;
+}

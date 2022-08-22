@@ -2,7 +2,7 @@ import { redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { useCart } from "hooks/useCart";
 import { addToCart } from "utils/cart.server";
-import { calculateDeliveryCharge, createOrder } from "utils/order.server";
+import { createOrder } from "utils/order.server";
 import { getUser, getUserId } from "utils/session.server";
 import Button from "~/components/Button";
 import Card from "~/components/Card";
@@ -18,8 +18,7 @@ export async function loader({ request }) {
   }
 
   const user = await getUser(request);
-  const deliveryCharge = await calculateDeliveryCharge(request);
-  return { user, deliveryCharge };
+  return { user };
 }
 
 export async function action({ request }) {
@@ -43,12 +42,8 @@ export async function action({ request }) {
 export default function ConfirmOrder() {
   const loaderData = useLoaderData();
   const user = loaderData.user;
-  const deliveryCharge = loaderData.deliveryCharge;
 
   const { cart, totalAmount } = useCart();
-
-  const discount =
-    totalAmount >= 100 ? Math.round((totalAmount / 100) * 5) : false;
 
   return (
     <div className="flex flex-col justify-start gap-4">
@@ -110,26 +105,9 @@ export default function ConfirmOrder() {
             );
           })}
         </Items>
-        <p className="flex flex-row items-baseline justify-between gap-2">
-          <span className="font-bold">Subtotal</span>
-          <span className="text-green-900 font-bold">₹{totalAmount}</span>
-        </p>
-        {discount ? (
-          <p className="text-sm flex flex-row items-baseline justify-between gap-2 border-t border-dashed border-neutral-400 pt-2">
-            <span className="font-bold">- Discount (5%)</span>
-            <span className="text-green-900 font-bold">₹{discount}</span>
-          </p>
-        ) : null}
-        <p className="text-sm flex flex-row items-baseline justify-between gap-2 border-t border-dashed border-neutral-400 pt-2">
-          <span className="font-bold">+ Delivery charges</span>
-          <span className="text-green-900 font-bold">₹{deliveryCharge}</span>
-        </p>
         <p className="text-lg flex flex-row items-baseline justify-between gap-2 border-t border-dashed border-neutral-600 pt-2">
           <span className="font-bold">Total</span>
-          <span className="text-green-900 font-bold">
-            ₹
-            {deliveryCharge + (discount ? totalAmount - discount : totalAmount)}
-          </span>
+          <span className="text-green-900 font-bold">₹{totalAmount}</span>
         </p>
       </div>
 
@@ -149,7 +127,7 @@ export default function ConfirmOrder() {
         className="flex flex-col items-stretch justify-start gap-2"
       >
         <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-        <Button type="submit" theme="green">
+        <Button type="submit">
           <Check />
           <p>Confirm order</p>
         </Button>

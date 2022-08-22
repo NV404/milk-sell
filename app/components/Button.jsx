@@ -4,16 +4,17 @@ const PADDINGS = {
 };
 
 const THEMES = {
-  monochrome: "bg-neutral-100 text-black",
+  monochrome: "bg-black text-neutral-100",
   red: "bg-red-100 text-red-900",
   green: "bg-green-100 text-green-900",
   blue: "bg-blue-100 text-blue-900",
+  purple: "bg-purple-700 text-white",
 };
 
 export default function Button({
   as: As = "button",
   children,
-  theme = "green",
+  theme = "purple",
   size = "medium",
   round = true,
   className = "",
