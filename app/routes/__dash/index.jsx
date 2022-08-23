@@ -14,7 +14,10 @@ import Dropdown from "~/components/Dropdown";
 
 export async function loader({ request }) {
   const userID = await getUserId(request);
-  const user = await getUserById(userID);
+  let user = null;
+  if(userID){
+    user = await getUserById(userID);
+  }
   const sellers = await getSellers();
   const products = await getProducts();
 
