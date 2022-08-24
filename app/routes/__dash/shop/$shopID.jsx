@@ -10,7 +10,10 @@ export async function loader({ params, request }) {
   const shopID = params.shopID;
 
   const userID = await getUserId(request);
-  const user = await getUserById(userID);
+  let user = null;
+  if(userID){
+    user = await getUserById(userID);
+  }
   const products = await getShopProducts(shopID);
 
   if (products) {
@@ -23,7 +26,7 @@ export async function loader({ params, request }) {
 export default function Shop() {
   const loaderData = useLoaderData();
   const products = loaderData.products;
-  const user = loaderData.user;
+  const user = loaderData?.user;
   const seller = loaderData?.products[0]?.seller;
 
   if (products.length <= 0) {
@@ -39,7 +42,7 @@ export default function Shop() {
           <span className="text-black">Shop Name:</span> {seller.shopName}
         </p>
         <Button>Subscribe</Button>
-        {user.isVendor ? <Button theme="monochrome">Ask details</Button> : null}
+        {user?.isVendor ? <Button theme="monochrome">Ask details</Button> : null}
       </div>
 
       <Items>
