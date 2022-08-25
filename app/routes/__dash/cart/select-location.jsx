@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import MapPicker from "react-google-map-picker";
 import { getUser, getUserId } from "utils/session.server";
@@ -13,12 +13,18 @@ export async function loader({ request }) {
     return redirect("/login");
   }
 
-  return {};
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+
+  const fromIndex = searchParams.get("fromIndex") === "true";
+
+  return { fromIndex };
 }
 
 export async function action({ request }) {
   const formData = await request.formData();
 
+  const fromIndex = formData.get("fromIndex");
   const lat = formData.get("lat");
   const lng = formData.get("lng");
 
@@ -32,7 +38,7 @@ export async function action({ request }) {
       };
       await updateUser({ request, data });
     }
-    return redirect("cart/confirm-order");
+    return redirect(fromIndex === "true" ? "/" : "cart/confirm-order");
   }
 
   return { error: "values missing" };
@@ -40,6 +46,7 @@ export async function action({ request }) {
 
 export default function SelectLocation() {
   const [status, setStatus] = useState(null);
+  const formData = useLoaderData();
 
   const [show, setShow] = useState(false);
   const DefaultZoom = 15;
@@ -142,6 +149,14 @@ export default function SelectLocation() {
           <div className="w-full h-full bg-neutral-200 rounded-xl animate-pulse"></div>
         )}
       </div>
+
+      <input
+        type="text"
+        name="fromIndex"
+        value={formData.fromIndex}
+        readOnly
+        hidden
+      />
 
       <Button type="submit">
         <LocationMarker />

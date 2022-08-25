@@ -99,7 +99,9 @@ export default function App() {
             <Outlet />
           </CartProvider>
         </div>
-        <ScrollRestoration /> <Scripts /> <LiveReload />
+        <ScrollRestoration />{" "}
+        <script defer src="https://checkout.razorpay.com/v1/checkout.js" />
+        <Scripts /> <LiveReload />
       </body>
     </html>
   );

@@ -1,7 +1,14 @@
 import { redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+  useTransition,
+} from "@remix-run/react";
 import { useCart } from "hooks/useCart";
-import { addToCart } from "utils/cart.server";
+import { useEffect, useState } from "react";
+import { createRazorpayOrder } from "utils/payment.server";
 import { createOrder } from "utils/order.server";
 import { getUser, getUserId } from "utils/session.server";
 import Button from "~/components/Button";
@@ -10,6 +17,8 @@ import Field from "~/components/Field";
 import Items from "~/components/Items";
 import Cash from "~/icons/Cash";
 import Check from "~/icons/Check";
+import CreditCard from "~/icons/CreditCard";
+import { addToCart } from "utils/cart.server";
 
 export async function loader({ request }) {
   const userID = await getUserId(request);
@@ -25,13 +34,27 @@ export async function action({ request }) {
   const formData = await request.formData();
 
   const items = JSON.parse(formData.get("cart"));
+  const amount = parseInt(formData.get("amount"));
+  const paymentType = formData.get("paymentType");
 
   if (items) {
-    const cartItems = await addToCart({ items, request });
-    if (cartItems) {
-      const order = await createOrder(request);
-      if (order) {
-        return redirect("/orders?success=true");
+    if (paymentType === "razorpay") {
+      const orderId = await createRazorpayOrder(amount);
+      return {
+        items,
+        orderId,
+        key: process.env.RAZORPAY_KEY_ID,
+        razorpay: true,
+      };
+    }
+
+    if (paymentType === "cash") {
+      const cartItems = await addToCart({ items, request });
+      if (cartItems) {
+        const order = await createOrder({ request });
+        if (order) {
+          return redirect("/orders?success=true");
+        }
       }
     }
   }
@@ -40,10 +63,64 @@ export async function action({ request }) {
 }
 
 export default function ConfirmOrder() {
+  const actionData = useActionData();
+  const transition = useTransition();
+
   const loaderData = useLoaderData();
   const user = loaderData.user;
 
   const { cart, totalAmount } = useCart();
+  const [isCashChecked, setIsCashChecked] = useState(true);
+
+  const [paymentFailed, setPaymentFailed] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(
+    function () {
+      if (actionData && actionData.razorpay === true && !actionData?.errors) {
+        const { amount, id: order_id, currency } = actionData.orderId;
+
+        const options = {
+          key: actionData.key,
+          amount: amount,
+          currency: currency,
+          name: "Gawala",
+          order_id: order_id,
+          handler: async function (response) {
+            const data = {
+              orderCreationId: order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+              items: actionData.items,
+            };
+
+            await fetch("/api/checkPayment", {
+              method: "POST",
+              body: JSON.stringify(data),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }).then(async (res) => {
+              setLoading(true);
+              const data = await res.json();
+              if (data?.success) {
+                navigate("/orders?success=true");
+              }
+              if (data?.error) {
+                setPaymentFailed(true);
+                setLoading(false);
+              }
+            });
+          },
+        };
+
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      }
+    },
+    [actionData, navigate]
+  );
 
   return (
     <div className="flex flex-col justify-start gap-4">
@@ -112,22 +189,54 @@ export default function ConfirmOrder() {
       </div>
 
       <Card theme="blue">
-        <Cash />
-        <p className="">
-          <span className="font-bold">Pay on delivery</span>
-          <br />
-          <span className="text-sm font-medium">
-            Cash, Paytm, PhonePe or any UPI.
-          </span>
-        </p>
+        <div
+          className="flex flex-row items-center justify-start gap-4"
+          onClick={() => setIsCashChecked(true)}
+        >
+          <input type="radio" checked={isCashChecked === true} />
+          <Cash />
+          <p className="">
+            <span className="font-bold">Pay on delivery</span>
+            <br />
+            <span className="text-sm font-medium">
+              Cash, Paytm, PhonePe or any UPI.
+            </span>
+          </p>
+        </div>
+      </Card>
+
+      <Card theme="green">
+        <div
+          className="flex flex-row items-center justify-start gap-4"
+          onClick={() => setIsCashChecked(false)}
+        >
+          <input type="radio" checked={isCashChecked === false} />
+          <CreditCard />
+          <p className="">
+            <span className="font-bold">Pay now</span>
+            <br />
+            <span className="text-sm font-medium">
+              UPI, debit/credit cards, Net Banking etc.
+            </span>
+          </p>
+        </div>
       </Card>
 
       <Form
         method="post"
         className="flex flex-col items-stretch justify-start gap-2"
       >
+        <input
+          type="hidden"
+          name="paymentType"
+          value={isCashChecked ? "cash" : "razorpay"}
+        />
         <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-        <Button type="submit">
+        <input type="hidden" name="amount" value={totalAmount} />
+        <Button
+          type="submit"
+          disabled={transition.state === "submitting" || isLoading}
+        >
           <Check />
           <p>Confirm order</p>
         </Button>

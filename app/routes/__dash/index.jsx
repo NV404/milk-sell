@@ -15,7 +15,7 @@ import Dropdown from "~/components/Dropdown";
 export async function loader({ request }) {
   const userID = await getUserId(request);
   let user = null;
-  if(userID){
+  if (userID) {
     user = await getUserById(userID);
   }
   const sellers = await getSellers();
@@ -33,18 +33,19 @@ export default function Index() {
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <LangShow />
-          <Dropdown
-            label="City"
-            id="city"
-            name="city"
-            className="w-fit"
-            options={[
-              { value: "bhilwara", text: "Bhilwara" },
-              { value: "ajmer", text: "Ajmer" },
-              { value: "jaipur", text: "Jaipur" },
-            ]}
-            required
-          />
+          <Link to="/cart/select-location?fromIndex=true">
+            <fieldset className="h-full flex flex-col items-stretch justify-start gap-1 disabled:opacity-60 disabled:cursor-not-allowed">
+              <label className="font-medium text-sm">Select Location</label>
+              <div
+                className="bg-white px-4 text-sm
+             py-2 rounded-lg h-full text-black"
+              >
+                <p>
+                  {user?.lat}, {user?.lng}
+                </p>
+              </div>
+            </fieldset>
+          </Link>
         </div>
         <Link
           to="/search"
@@ -82,7 +83,7 @@ export default function Index() {
             Click here to join and connect with farmers -
           </p>
           <Button as={Link} to="/login" className="mt-2">
-            Join.
+            Join
           </Button>
         </div>
       )}
@@ -94,21 +95,27 @@ export default function Index() {
             to="/category/milk"
             className="flex flex-col gap-2 items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+            <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
+              <img src="/milk.png" />
+            </div>
             <p className="text-medium">Milk</p>
           </Link>
           <Link
             to="/category/dahi"
             className="flex flex-col gap-2 items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+            <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
+              <img src="/dahi.png" />
+            </div>
             <p className="text-medium">Dahi</p>
           </Link>
           <Link
             to="/category/chach"
             className="flex flex-col gap-2 items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+            <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
+              <img src="/chaach.png" />
+            </div>
             <p className="text-medium">Chach</p>
           </Link>
         </div>
@@ -117,21 +124,27 @@ export default function Index() {
             to="/category/oanner"
             className="flex flex-col gap-2 items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+            <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
+              <img src="/panner.png" />
+            </div>
             <p className="text-medium">Panner</p>
           </Link>
           <Link
             to="/category/xow dunk"
             className="flex flex-col gap-2 items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+            <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
+              <img src="/cowDunk.png" />
+            </div>
             <p className="text-medium">Cow Dunk</p>
           </Link>
           <Link
             to="/category/others"
             className="flex flex-col gap-2 items-center"
           >
-            <div className="w-14 h-14 rounded-full bg-purple-200"></div>
+            <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
+              <img src="/others.png" />
+            </div>
             <p className="text-medium">Others</p>
           </Link>
         </div>

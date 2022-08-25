@@ -1,9 +1,10 @@
 import { emptyCart, getCart } from "./cart.server";
 import { db } from "./db.server";
+import { addTransaction } from "./payment.server";
 import { getUserId } from "./session.server";
 import { getUserById } from "./user.server";
 
-export async function createOrder(request) {
+export async function createOrder({ request, paymentMode = "cash" }) {
   const userID = await getUserId(request);
   const user = await getUserById(userID);
   const cart = await getCart(request);
@@ -18,11 +19,12 @@ export async function createOrder(request) {
     data: {
       price: price,
       userID: userID,
-      sellerId: cart[0].product.sellerId,
+      sellerId: cart[0]?.product.sellerId,
       addressLine1: user.addressLine1,
       addressLine2: user.addressLine2,
       lat: user.lat,
       lng: user.lng,
+      paymentMode,
       carts: { connect: cart.map((item) => ({ id: item.id })) },
     },
     include: {
