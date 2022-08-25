@@ -10,7 +10,6 @@ import Sparkles from "~/icons/Sparkles";
 import { getUserId } from "utils/session.server";
 import { getUserById } from "utils/user.server";
 import LangShow from "~/components/LanguageToggle";
-import Dropdown from "~/components/Dropdown";
 
 export async function loader({ request }) {
   const userID = await getUserId(request);

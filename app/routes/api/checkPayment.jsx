@@ -4,6 +4,7 @@ import { createOrder } from "utils/order.server";
 
 export async function action({ request }) {
   try {
+    console.log("enter");
     const data = await request.json();
     const { orderCreationId, razorpayPaymentId, razorpaySignature, items } =
       data;
@@ -33,7 +34,7 @@ export async function action({ request }) {
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "server error" }), {
+    return new Response(JSON.stringify({ error: error }), {
       status: 500,
       headers: {
         "Content-Type": "application/json; charset=utf-8",

@@ -3,8 +3,8 @@ import { json } from "@remix-run/node";
 export let loader = () => {
   return json(
     {
-      short_name: "DairyValley",
-      name: "DairyValley",
+      short_name: "Gwale",
+      name: "Gwale",
       start_url: "/",
       display: "standalone",
       background_color: "#ffffff",

@@ -82,11 +82,11 @@ export default function Login() {
     <div className="min-h-full flex flex-col items-stretch justify-between">
       <header className="flex flex-row items-center justify-center gap-2">
         <Logo size={28} />
-        <p className="font-black text-xl">DairyValley.in</p>
+        <p className="font-black text-xl">Gwale</p>
       </header>
       <aside className="flex flex-col items-stretch justify-start gap-8">
         <h1 className="font-black text-4xl md:text-6xl">
-          <span className="hidden">DairyValley —</span>
+          <span className="hidden">Gwale —</span>
           <span className="text-center">
             Get Every dairy product right from your home.
           </span>

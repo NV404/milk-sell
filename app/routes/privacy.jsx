@@ -34,8 +34,8 @@ export default function Privacy() {
         <li>
           <p>
             <strong>Company</strong> (referred to as either 'the Company', 'We',
-            'Us' or 'Our' in this Agreement) refers to {/* */}DairyValley{/* */}
-            , {/* */}Subhash nagar{/* */}.
+            'Us' or 'Our' in this Agreement) refers to {/* */}Gwale{/* */},{" "}
+            {/* */}Subhash nagar{/* */}.
           </p>
         </li>
         <li>
@@ -95,14 +95,14 @@ export default function Privacy() {
         </li>
         <li>
           <p>
-            <strong>Website</strong> refers to {/* */}DairyValley{/* */},
-            accessible from{/* */}{" "}
+            <strong>Website</strong> refers to {/* */}Gwale{/* */}, accessible
+            from{/* */}{" "}
             <a
-              href="DairyValley.in"
+              href="Gwale"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
-              DairyValley.in
+              Gwale
             </a>
           </p>
         </li>
@@ -491,7 +491,7 @@ export default function Privacy() {
         If you have any questions about this Privacy Policy, You can contact us:
       </p>
       <ul>
-        <li>By email: {/* */}DairyValleyin@gmail.com</li>
+        <li>By email: {/* */}Gwalein@gmail.com</li>
       </ul>
     </div>
   );

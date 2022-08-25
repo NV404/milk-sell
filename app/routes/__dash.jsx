@@ -50,7 +50,7 @@ export default function __Dash() {
             className="flex flex-row items-center justify-center gap-2"
           >
             <Logo size={24} />
-            <h1 className="text-center font-black text-lg">DairyValley</h1>
+            <h1 className="text-center font-black text-lg">Gwale</h1>
           </Link>
 
           <div className="flex flex-row items-center justify-end gap-4">

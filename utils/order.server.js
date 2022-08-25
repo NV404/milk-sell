@@ -8,23 +8,33 @@ export async function createOrder({ request, paymentMode = "cash" }) {
   const userID = await getUserId(request);
   const user = await getUserById(userID);
   const cart = await getCart(request);
-  let price = 0;
+  const sellerId = cart[0]?.product.sellerId;
+  let amount = 0;
 
   cart.map((item) => {
-    price += item.product.price * item.quantity;
+    amount += item.product.price * item.quantity;
     return null;
   });
 
+  const transaction = await addTransaction({
+    request,
+    sellerId,
+    amount,
+    paymentMode,
+  });
+
+  console.log(transaction, "transaction");
+
   const order = await db.order.create({
     data: {
-      price: price,
+      price: amount,
       userID: userID,
-      sellerId: cart[0]?.product.sellerId,
+      sellerId,
       addressLine1: user.addressLine1,
       addressLine2: user.addressLine2,
       lat: user.lat,
       lng: user.lng,
-      paymentMode,
+      transactionId: transaction.id,
       carts: { connect: cart.map((item) => ({ id: item.id })) },
     },
     include: {

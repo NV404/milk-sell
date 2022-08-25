@@ -16,7 +16,7 @@ import { CartProvider } from "hooks/useCart";
 
 export const meta = () => ({
   charset: "utf-8",
-  title: "DairyValley — Fast, fresh, and on time.",
+  title: "Gwale — Fast, fresh, and on time.",
   viewport: "width=device-width,initial-scale=1",
 
   "theme-color": "#000000",
