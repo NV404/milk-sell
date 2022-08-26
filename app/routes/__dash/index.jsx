@@ -120,7 +120,7 @@ export default function Index() {
         </div>
         <div className="w-full flex justify-between items-center px-8">
           <Link
-            to="/category/oanner"
+            to="/category/panner"
             className="flex flex-col gap-2 items-center"
           >
             <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">
@@ -129,7 +129,7 @@ export default function Index() {
             <p className="text-medium">Panner</p>
           </Link>
           <Link
-            to="/category/xow dunk"
+            to="/category/cow-dunk"
             className="flex flex-col gap-2 items-center"
           >
             <div className="w-14 h-14 rounded-full bg-purple-200 overflow-hidden">

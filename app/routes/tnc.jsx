@@ -14,11 +14,28 @@ export default function Index() {
       <p className="font-bold text-3xl text-center">Terms & condition</p>
       <ul class="list-disc p-10">
         <li>
-          Our application is only for users who have ability to and willing to
-          test the products.
+          The app is for connecting basic dairy farmers to consumers so that
+          consumers don't have to pay any mediating or hidden expenses.
         </li>
-        <li>We are not responsible for any damage caused by the products.</li>
-        <li>blah blah blah</li>
+        <li>
+          Please note all products are raw and supplied directly from sellers.
+          There is no interference whatsoever between the producer and the
+          consumer.
+        </li>
+        <li>
+          The application and developers, in any way, are NOT liable for the
+          quality, transportation, or standards of the product mentioned in the
+          application.
+        </li>
+        <li>
+          Producers or Consumers are solely responsible for testing the product
+          standards while accepting or receiving the orders.
+        </li>
+        <li>
+          Our application strictly advises consumers with relevant testing
+          equipment only to order directly from the source as there may or may
+          not be the same conducted on the producer side.
+        </li>
       </ul>
       <div className="flex flex-col gap-2">
         <Form method="post" className="flex gap-2">
