@@ -1,9 +1,22 @@
 import { redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-import { updateUser } from "utils/user.server";
+import { getUserId } from "utils/session.server";
+import { getUserById, updateUser } from "utils/user.server";
 import Button from "~/components/Button";
 import Field from "~/components/Field";
 import LocationMarker from "~/icons/LocationMarker";
+
+export async function loader({ request }) {
+  const userID = await getUserId(request);
+  if (userID) {
+    const user = await getUserById(userID);
+    if (user.isVendor) {
+      return redirect("/");
+    }
+    return {};
+  }
+  return redirect("/login");
+}
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -12,6 +25,7 @@ export async function action({ request }) {
     name: formData.get("name"),
     vendorAddress: formData.get("vendorAddress"),
     GSTNumber: formData.get("GSTNumber"),
+    dailyConsumption: parseInt(formData.get("dailyConsumption")),
     aadharNumber: formData.get("aadharNumber"),
     isVendor: true,
   };
@@ -51,6 +65,14 @@ export default function OnBoard() {
             id="vendorAddress"
             label="Enter your business/org. address"
             placeholder="Eg. subhash nagar, bhilwara"
+            required
+          />
+          <Field
+            type="text"
+            name="dailyConsumption"
+            id="dailyConsumption"
+            label="Enter your daily capacity in litres"
+            placeholder="Eg. 100"
             required
           />
           <Field

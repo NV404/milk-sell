@@ -69,8 +69,15 @@ export default function Index() {
           {user.isVendor ? (
             <div className="w-full rounded-lg bg-white p-5">
               <p className="text-lg font-bold">Name: {user.name}</p>
-              <p className="font-medium">{user.vendorAddress}</p>
-              <p>Daily capacity: 100 Litters</p>
+              <a
+                href={`http://www.google.com/maps/place/${user.vendorLat},${user.vendorLng}`}
+                target="_blank"
+                className="text-purple-500 underline"
+              >
+                Address:
+                {user.vendorAddress}
+              </a>
+              <p>Daily capacity: {user.dailyConsumption} Litres</p>
               <p>Average Price: 20 ₹</p>
             </div>
           ) : null}
@@ -150,7 +157,6 @@ export default function Index() {
       </div>
 
       <p className="font-bold text-lg">diary's near you</p>
-
       <Items>
         {loaderData?.sellers?.map(function (seller) {
           return (
@@ -162,10 +168,10 @@ export default function Index() {
               <div className="flex flex-col items-stretch justify-start gap-2 p-5">
                 <p className="font-bold text-lg">{seller.shopName}</p>
                 <span className="flex gap-2 items-center">
-                  <Sparkles fill="green" />
-                  <p>
-                    <span className="font-medium">3.8</span> (100)
-                  </p>
+                  Daily Production:{" "}
+                  <span className="font-medium">
+                    {seller.dailyProduction} Litres
+                  </span>
                 </span>
               </div>
             </Link>
